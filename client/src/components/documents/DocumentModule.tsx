@@ -398,11 +398,13 @@ export default function DocumentModule() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {clients.map((client: any) => (
+                    {clients && Array.isArray(clients) ? clients.map((client: any) => (
                       <SelectItem key={client.id} value={client.id.toString()}>
                         {client.name} - {client.idNumber}
                       </SelectItem>
-                    ))}
+                    )) : (
+                      <SelectItem value="none">لا يوجد عملاء</SelectItem>
+                    )}
                   </SelectContent>
                 </Select>
                 <FormMessage />

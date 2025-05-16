@@ -37,9 +37,9 @@ export default function ClientTable({
   const filteredClients = useMemo(() => {
     if (!searchQuery) return clients;
     return clients.filter((client) => 
-      client.name.includes(searchQuery) || 
-      client.idNumber.includes(searchQuery) ||
-      client.mobile.includes(searchQuery)
+      (client.name && client.name.toLowerCase().includes(searchQuery.toLowerCase())) || 
+      (client.idNumber && client.idNumber.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (client.mobile && client.mobile.toLowerCase().includes(searchQuery.toLowerCase()))
     );
   }, [clients, searchQuery]);
   

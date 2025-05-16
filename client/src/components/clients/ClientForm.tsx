@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Form, 
   FormControl, 
@@ -37,16 +37,36 @@ export default function ClientForm({ client, onSave, isDisabled = false, isPendi
   const [idImagePreview, setIdImagePreview] = useState<string | null>(client?.idImageUrl || null);
   
   // Initialize the form with client data or empty values
+  const defaultValues = {
+    name: client?.name || "",
+    idNumber: client?.idNumber || "",
+    idExpiry: client?.idExpiry ? getFormattedDate(new Date(client.idExpiry)) : getFormattedDate(),
+    mobile: client?.mobile || "",
+    description: client?.description || ""
+  };
+  
   const form = useForm<z.infer<typeof clientSchema>>({
     resolver: zodResolver(clientSchema),
-    defaultValues: {
-      name: client?.name || "",
-      idNumber: client?.idNumber || "",
-      idExpiry: client?.idExpiry ? getFormattedDate(new Date(client.idExpiry)) : getFormattedDate(),
-      mobile: client?.mobile || "",
-      description: client?.description || ""
-    }
+    defaultValues: defaultValues,
+    mode: "onChange"
   });
+  
+  // Reset form when client changes
+  useEffect(() => {
+    if (client) {
+      form.reset({
+        name: client.name || "",
+        idNumber: client.idNumber || "",
+        idExpiry: client.idExpiry ? getFormattedDate(new Date(client.idExpiry)) : getFormattedDate(),
+        mobile: client.mobile || "",
+        description: client.description || ""
+      });
+      setIdImagePreview(client.idImageUrl || null);
+    } else {
+      form.reset(defaultValues);
+      setIdImagePreview(null);
+    }
+  }, [client, form]);
   
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
