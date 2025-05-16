@@ -248,7 +248,7 @@ export default function DocumentModule() {
   };
   
   const handleTemplateChange = (templateId: string) => {
-    const template = templates.find(t => t.id.toString() === templateId);
+    const template = templates ? templates.find((t: any) => t.id.toString() === templateId) : null;
     setSelectedTemplate(template);
     setSelectedDocument(null);
     form.reset({});
@@ -576,7 +576,7 @@ export default function DocumentModule() {
               <SelectValue placeholder="اختر نوع الوثيقة" />
             </SelectTrigger>
             <SelectContent>
-              {templates.map((template: any) => (
+              {templates && templates.map((template: any) => (
                 <SelectItem key={template.id} value={template.id.toString()}>
                   {template.name}
                 </SelectItem>
@@ -642,7 +642,7 @@ export default function DocumentModule() {
             </div>
           ) : isDocumentsLoading ? (
             <div className="text-center py-4">جاري تحميل البيانات...</div>
-          ) : documents.length > 0 ? (
+          ) : documents && documents.length > 0 ? (
             <div className="border border-gray-200 rounded overflow-hidden">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
@@ -659,7 +659,7 @@ export default function DocumentModule() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {documents.map((document: any) => (
+                  {documents && documents.map((document: any) => (
                     <tr
                       key={document.id}
                       className={`hover:bg-gray-50 cursor-pointer ${selectedDocument?.id === document.id ? 'bg-blue-50' : ''}`}
