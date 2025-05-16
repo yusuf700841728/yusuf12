@@ -99,15 +99,15 @@ export default function QuestionConfig({
         <div>
           <Label className="block text-xs text-neutral-500 mb-1">مرتبط بالحقل</Label>
           <Select
-            value={questionData.fieldId || ""}
-            onValueChange={(value) => handleChange("fieldId", value || undefined)}
+            value={questionData.fieldId || "none"}
+            onValueChange={(value) => handleChange("fieldId", value === "none" ? undefined : value)}
             disabled={disabled}
           >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="اختر الحقل المرتبط" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">غير مرتبط</SelectItem>
+              <SelectItem value="none">غير مرتبط</SelectItem>
               {fields.map((field) => (
                 <SelectItem key={field.id} value={field.id}>
                   {field.name}
