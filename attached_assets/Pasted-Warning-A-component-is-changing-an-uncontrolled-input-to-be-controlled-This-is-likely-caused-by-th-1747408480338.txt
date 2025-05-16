@@ -1,0 +1,34 @@
+Warning: A component is changing an uncontrolled input to be controlled. This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://reactjs.org/link/controlled-components%s 
+    at input
+    at _c (https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/src/components/ui/input.tsx:20:11)
+    at https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-5S42QOQO.js?v=23677f4d:79:13
+    at https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-5S42QOQO.js?v=23677f4d:56:13
+    at https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/src/components/ui/form.tsx:130:9
+    at div
+    at https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/src/components/ui/form.tsx:72:6
+    at Controller (https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-CXJMC5RA.js?v=23677f4d:298:35)
+    at FormField (https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/src/components/ui/form.tsx:33:6)
+    at div
+    at div
+    at _c9 (https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/src/components/ui/card.tsx:114:12)
+    at div
+    at _c (https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/src/components/ui/card.tsx:20:11)
+    at form
+    at FormProvider (https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-CXJMC5RA.js?v=23677f4d:102:11)
+    at div
+    at div
+    at div
+    at DocumentModule (https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/src/components/documents/DocumentModule.tsx:54:21)
+    at div
+    at Documents (https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/src/pages/Documents.tsx:22:3)
+    at Route (https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=23677f4d:323:16)
+    at Switch (https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=23677f4d:379:17)
+    at main
+    at div
+    at div
+    at Layout (https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/src/components/layout/Layout.tsx:22:34)
+    at Router
+    at Provider (https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-SG7MREQ6.js?v=23677f4d:38:15)
+    at TooltipProvider (https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=23677f4d:59:5)
+    at QueryClientProvider (https://3aeab1da-7d18-440c-a8f4-40d2d530d9b8-00-1m7u2yazjqky5.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=23677f4d:2805:3)
+    at App

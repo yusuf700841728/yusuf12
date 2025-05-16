@@ -159,11 +159,35 @@ export default function ClientModule() {
   
   return (
     <div className="flex-1 overflow-hidden flex flex-col" id="clients-module">
-      {/* Command bar */}
-      <div className="bg-white border-b border-gray-200 p-2 command-bar flex flex-wrap gap-2">
+      {/* Command bar - Fixed position */}
+      <div className="bg-white border-b border-gray-200 p-2 command-bar flex flex-wrap gap-2 sticky top-0 z-10 shadow-md">
+        <div className="flex flex-wrap gap-2 items-center mr-auto">
+          <input
+            type="text"
+            placeholder="بحث بالاسم، رقم الهوية أو رقم الجوال..."
+            className="px-3 py-1.5 border rounded flex-grow min-w-[200px]"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button 
+            className="flex items-center px-3 py-1.5 rounded text-sm text-white bg-blue-500 hover:bg-blue-600"
+            onClick={() => handleSearch(searchQuery)}
+          >
+            <i className="fas fa-search ml-2"></i>
+            <span>بحث</span>
+          </button>
+        </div>
+
         <button 
           className="flex items-center px-3 py-1.5 rounded text-sm text-neutral-700 hover:bg-gray-100"
-          onClick={() => document.getElementById('client-form')?.requestSubmit()}
+          onClick={() => {
+            const form = document.getElementById('client-form') as HTMLFormElement;
+            if (form) {
+              // Submit the form safely
+              const event = new Event('submit', { bubbles: true, cancelable: true });
+              form.dispatchEvent(event);
+            }
+          }}
           disabled={createClientMutation.isPending || updateClientMutation.isPending}
         >
           <i className="fas fa-save ml-2"></i>
@@ -193,7 +217,7 @@ export default function ClientModule() {
           disabled={isLoading}
         >
           <i className="fas fa-sync-alt ml-2"></i>
-          <span>تحديث الجداول</span>
+          <span>تحديث</span>
         </button>
         
         <button 
@@ -205,15 +229,7 @@ export default function ClientModule() {
         </button>
         
         <button 
-          className="flex items-center px-3 py-1.5 rounded text-sm text-neutral-700 hover:bg-gray-100"
-          onClick={() => handleSearch(searchQuery)}
-        >
-          <i className="fas fa-search ml-2"></i>
-          <span>بحث</span>
-        </button>
-        
-        <button 
-          className="flex items-center px-3 py-1.5 rounded text-sm text-neutral-700 hover:bg-gray-100"
+          className="flex items-center px-3 py-1.5 rounded text-sm text-white bg-red-500 hover:bg-red-600"
           onClick={handleDelete}
           disabled={!selectedClient || deleteClientMutation.isPending}
         >

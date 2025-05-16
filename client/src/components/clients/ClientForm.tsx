@@ -16,12 +16,12 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { getFormattedDate } from "@/lib/utils";
 
-// Define the form schema with validation
+// Define the form schema with validation - only name is required
 const clientSchema = z.object({
   name: z.string().min(3, { message: "اسم العميل يجب أن يكون 3 أحرف على الأقل" }),
-  idNumber: z.string().min(5, { message: "رقم الهوية يجب أن يكون 5 أرقام على الأقل" }),
-  idExpiry: z.string().min(1, { message: "تاريخ انتهاء الهوية مطلوب" }),
-  mobile: z.string().min(10, { message: "رقم الجوال يجب أن يكون 10 أرقام على الأقل" }),
+  idNumber: z.string().optional(),
+  idExpiry: z.string().optional(),
+  mobile: z.string().optional(),
   description: z.string().optional(),
   idImage: z.any().optional() // Will be handled separately
 });
