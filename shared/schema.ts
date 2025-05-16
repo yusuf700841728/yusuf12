@@ -65,6 +65,7 @@ export const documents = pgTable("documents", {
   templateId: integer("template_id").notNull(),
   data: jsonb("data").notNull(), // Document data based on template fields
   archived: boolean("archived").default(false),
+  archivedAt: timestamp("archived_at"),
   archiveMetadata: jsonb("archive_metadata"), // Archive-specific metadata
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -73,6 +74,7 @@ export const documents = pgTable("documents", {
 export const insertDocumentSchema = createInsertSchema(documents).omit({
   id: true,
   archived: true,
+  archivedAt: true,
   archiveMetadata: true,
   createdAt: true,
   updatedAt: true

@@ -6,6 +6,8 @@ import {
   reports, type Report, type InsertReport,
   type ArchiveMetadata
 } from "@shared/schema";
+import { db } from "./db";
+import { eq, isNotNull } from "drizzle-orm";
 
 // Storage interface
 export interface IStorage {
@@ -344,4 +346,190 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export class DatabaseStorage implements IStorage {
+  // User methods
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
+  }
+  
+  // Client methods
+  async getClients(): Promise<Client[]> {
+    return db.select().from(clients);
+  }
+
+  async getClient(id: number): Promise<Client | undefined> {
+    const [client] = await db.select().from(clients).where(eq(clients.id, id));
+    return client || undefined;
+  }
+
+  async getClientByIdNumber(idNumber: string): Promise<Client | undefined> {
+    const [client] = await db.select().from(clients).where(eq(clients.idNumber, idNumber));
+    return client || undefined;
+  }
+
+  async createClient(client: InsertClient): Promise<Client> {
+    const [newClient] = await db
+      .insert(clients)
+      .values(client)
+      .returning();
+    return newClient;
+  }
+
+  async updateClient(id: number, client: Partial<InsertClient>): Promise<Client | undefined> {
+    const [updatedClient] = await db
+      .update(clients)
+      .set(client)
+      .where(eq(clients.id, id))
+      .returning();
+    return updatedClient || undefined;
+  }
+
+  async deleteClient(id: number): Promise<boolean> {
+    const result = await db
+      .delete(clients)
+      .where(eq(clients.id, id));
+    return true;
+  }
+  
+  // Template methods
+  async getTemplates(): Promise<Template[]> {
+    return db.select().from(templates);
+  }
+
+  async getTemplate(id: number): Promise<Template | undefined> {
+    const [template] = await db.select().from(templates).where(eq(templates.id, id));
+    return template || undefined;
+  }
+
+  async createTemplate(template: InsertTemplate): Promise<Template> {
+    const [newTemplate] = await db
+      .insert(templates)
+      .values(template)
+      .returning();
+    return newTemplate;
+  }
+
+  async updateTemplate(id: number, template: Partial<InsertTemplate>): Promise<Template | undefined> {
+    const [updatedTemplate] = await db
+      .update(templates)
+      .set(template)
+      .where(eq(templates.id, id))
+      .returning();
+    return updatedTemplate || undefined;
+  }
+
+  async deleteTemplate(id: number): Promise<boolean> {
+    const result = await db
+      .delete(templates)
+      .where(eq(templates.id, id));
+    return true;
+  }
+  
+  // Document methods
+  async getDocuments(): Promise<Document[]> {
+    return db.select().from(documents);
+  }
+
+  async getDocumentsByTemplateId(templateId: number): Promise<Document[]> {
+    return db.select().from(documents).where(eq(documents.templateId, templateId));
+  }
+
+  async getDocument(id: number): Promise<Document | undefined> {
+    const [document] = await db.select().from(documents).where(eq(documents.id, id));
+    return document || undefined;
+  }
+
+  async createDocument(document: InsertDocument): Promise<Document> {
+    const [newDocument] = await db
+      .insert(documents)
+      .values(document)
+      .returning();
+    return newDocument;
+  }
+
+  async updateDocument(id: number, document: Partial<InsertDocument>): Promise<Document | undefined> {
+    const [updatedDocument] = await db
+      .update(documents)
+      .set(document)
+      .where(eq(documents.id, id))
+      .returning();
+    return updatedDocument || undefined;
+  }
+
+  async deleteDocument(id: number): Promise<boolean> {
+    const result = await db
+      .delete(documents)
+      .where(eq(documents.id, id));
+    return true;
+  }
+  
+  // Archive methods
+  async getArchivedDocuments(): Promise<Document[]> {
+    return db.select().from(documents).where(isNotNull(documents.archivedAt));
+  }
+
+  async archiveDocument(id: number, metadata: ArchiveMetadata): Promise<Document | undefined> {
+    const [updatedDocument] = await db
+      .update(documents)
+      .set({
+        archivedAt: new Date(),
+        archiveMetadata: metadata
+      })
+      .where(eq(documents.id, id))
+      .returning();
+    return updatedDocument || undefined;
+  }
+
+  async unarchiveDocument(id: number): Promise<Document | undefined> {
+    const [updatedDocument] = await db
+      .update(documents)
+      .set({
+        archivedAt: null,
+        archiveMetadata: null
+      })
+      .where(eq(documents.id, id))
+      .returning();
+    return updatedDocument || undefined;
+  }
+  
+  // Report methods
+  async getReports(): Promise<Report[]> {
+    return db.select().from(reports);
+  }
+
+  async getReport(id: number): Promise<Report | undefined> {
+    const [report] = await db.select().from(reports).where(eq(reports.id, id));
+    return report || undefined;
+  }
+
+  async createReport(report: InsertReport): Promise<Report> {
+    const [newReport] = await db
+      .insert(reports)
+      .values(report)
+      .returning();
+    return newReport;
+  }
+
+  async deleteReport(id: number): Promise<boolean> {
+    const result = await db
+      .delete(reports)
+      .where(eq(reports.id, id));
+    return true;
+  }
+}
+
+export const storage = new DatabaseStorage();
