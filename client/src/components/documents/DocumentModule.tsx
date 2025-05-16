@@ -513,7 +513,14 @@ export default function DocumentModule() {
       <div className="bg-white border-b border-gray-200 p-2 command-bar flex flex-wrap gap-2">
         <button 
           className="flex items-center px-3 py-1.5 rounded text-sm text-neutral-700 hover:bg-gray-100"
-          onClick={() => document.getElementById('document-form')?.requestSubmit()}
+          onClick={() => {
+            const formEl = document.getElementById('document-form') as HTMLFormElement;
+            if (formEl) {
+              // طريقة آمنة لتقديم النموذج بدون استخدام requestSubmit
+              const event = new Event('submit', { bubbles: true, cancelable: true });
+              formEl.dispatchEvent(event);
+            }
+          }}
           disabled={!selectedTemplate || isFormDisabled || createDocumentMutation.isPending || updateDocumentMutation.isPending}
         >
           <i className="fas fa-save ml-2"></i>
