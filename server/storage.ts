@@ -479,14 +479,14 @@ export class DatabaseStorage implements IStorage {
   
   // Archive methods
   async getArchivedDocuments(): Promise<Document[]> {
-    return db.select().from(documents).where(isNotNull(documents.archivedAt));
+    return db.select().from(documents).where(eq(documents.archived, true));
   }
 
   async archiveDocument(id: number, metadata: ArchiveMetadata): Promise<Document | undefined> {
     const [updatedDocument] = await db
       .update(documents)
       .set({
-        archivedAt: new Date(),
+        archived: true,
         archiveMetadata: metadata
       })
       .where(eq(documents.id, id))
@@ -498,7 +498,7 @@ export class DatabaseStorage implements IStorage {
     const [updatedDocument] = await db
       .update(documents)
       .set({
-        archivedAt: null,
+        archived: false,
         archiveMetadata: null
       })
       .where(eq(documents.id, id))
